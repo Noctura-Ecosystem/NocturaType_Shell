@@ -21,3 +21,14 @@
 
 ---
 
+## SAMPLE 2.1
+**Date:** 2026-03-19 18:58:10
+
+- Fixed panel issues
+- Bug details
+    - So, basically, I thought "panel.vue" was somehow inhereting the background immage from app.vue
+    - But I figured out that I forgot to set the icon size, hence, the size of the icon became 1920x1080 (because the icon is 1920x1080. its as I want to test out abnormal sizes)
+- Renamed files with apropriate, more discriptive names
+- NEW BUG: scroll-whell issue
+
+---

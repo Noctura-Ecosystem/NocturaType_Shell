@@ -58,7 +58,7 @@
 <template>
   <div class="panel-background" :class="{ hovered: hovered, leaving: leaving}" @mouseenter="onEnter" @mouseleave="onLeave">
     <button v-for="(icon, index) in icons" :key="index" class="img-wrapper">
-      <img :src="icon.src"/>
+      <img :src="icon.src" class="app-icon"/>
       <span class="tooltip">{{ icon.name }}</span>
     </button>
   </div>
@@ -66,20 +66,20 @@
 
 <style scoped>
 .panel-background {
+  padding: 0 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 40px;
+  gap: 25px;
   width: fit-content; 
   min-width: 5%;
   height: 70px;
   position: absolute;
-  bottom: -55px;
   backdrop-filter: blur(10px);
-  gap: 40px;
   background: rgba(0, 0, 0, 0.2);
   border-radius: 30px;
   left: 50%;
+  bottom: -50px;
   transform: translateX(-50%);
   transition: transform 0.5s ease;
 }
@@ -93,8 +93,19 @@
 }
 
 .img-wrapper {
+  all: unset;
   position: relative;
   display: inline-block;
+  background-color: transparent;
+}
+
+.app-icon {
+  background-color: transparent;
+  all: unset;
+  height: 48px;
+  width: 48px;
+  border-radius: 9px;
+  scale: 1.1;
 }
 
 .tooltip {
@@ -102,7 +113,8 @@
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.604);
+  background: rgba(255, 255, 255, 0.297);
+  backdrop-filter: blur(20px);
   color: rgb(0, 0, 0);
   padding: 4px 8px;
   font-size: 14px;
@@ -116,7 +128,7 @@
   word-wrap: break-word;
 }
 
-.tooltip:hover {
+.img-wrapper:hover .tooltip {
   opacity: 1;
 }
 </style>
