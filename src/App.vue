@@ -13,12 +13,12 @@
   * { /* for dev *//*
     outline: 1px solid red;
   }
+    */
   html, body {
     overflow: hidden;
     overflow-x: hidden;
     position: relative;
   }
-  */
 
   .background {
     height: 100vh;

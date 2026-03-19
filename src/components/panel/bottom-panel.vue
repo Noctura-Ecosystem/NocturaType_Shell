@@ -64,7 +64,7 @@
   </div>
 </template>
 
-<style scoped>
+<style>
 .panel-background {
   padding: 0 30px;
   display: flex;
@@ -79,6 +79,7 @@
   background: rgba(0, 0, 0, 0.2);
   border-radius: 30px;
   left: 50%;
+  transform: translate(-50%, -50px);
   bottom: -50px;
   transform: translateX(-50%);
   transition: transform 0.5s ease;
