@@ -75,3 +75,11 @@
 - The context dosent have a hide feature yet
 
 ---
+## SAMPLE 2.7
+**Date:** 2026-03-21 02:28:43
+
+- Added context menus and logics
+- Detials of the context menus:-
+    - The Time contexts layouts had been implemented
+
+---

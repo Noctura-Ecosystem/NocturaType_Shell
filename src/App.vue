@@ -11,11 +11,9 @@
 </template>
 
 <style>
-  /*
-  * { /* for dev *//*
+  * { /* for dev */
     outline: 1px solid red;
   }
-  */
 
   html, body {
     overflow: hidden;

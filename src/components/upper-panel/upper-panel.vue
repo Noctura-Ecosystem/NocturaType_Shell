@@ -1,11 +1,7 @@
 <script setup lang="ts">
     import {ref, onMounted} from "vue";
     import appContext from "../contexts/apps-context.vue";
-    let hover = ref(false);
-    function topPanelMouse(mouse: boolean) {
-        hover.value = mouse;
-        console.log("TOP-PANEL:", hover.value)
-    }
+    import timeContext from "../contexts/time-context.vue";
 
     const hour = ref(0);
     const minute = ref(0);
@@ -13,8 +9,6 @@
     const ampm = ref("am");
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     const month = ref("Jan");
-
-
     function updateTime() {
       const now = new Date();
       hour.value = now.getHours();
@@ -22,6 +16,44 @@
       minute.value = now.getMinutes();
       second.value = now.getSeconds();
       month.value = months[now.getMonth()]
+    }
+
+
+    
+    let app_appear = false;
+    let app_hide_freeze = false;
+    function toggleContextAppear(toggle: boolean, context: String) {
+      switch (context) {
+        case "app":
+          if (!app_hide_freeze) {
+            app_appear = toggle;
+          }
+      }
+      console.log(`TOGGLED CONTEXT:- ${toggle} ${context}`)
+      console.trace();
+    }
+
+    function toggleContextAppearClick(context: String) {
+      switch (context) {
+        case "app":
+          app_hide_freeze = !app_hide_freeze
+          if (app_hide_freeze) {
+            toggleContextAppear(true, context)
+            app_hide_freeze = true
+          } else {
+            app_hide_freeze = false
+            toggleContextAppear(false, context)
+          }
+      }
+      console.log(`FREEZE CONTEXT:- ${context}`)
+    }
+    let top_panel_appear = false;
+
+    function topPanelMouse(mouse: boolean) {
+       if (!app_appear){
+        top_panel_appear = mouse;
+       }
+        console.log("TOP-PANEL:", top_panel_appear)
     }
 
     onMounted(() => {
@@ -33,10 +65,10 @@
 
 
 <template>
-    <div class="top-panel" :class="{hover: hover}" @mouseenter="topPanelMouse(true)" @mouseleave="topPanelMouse(false)">
+    <div class="top-panel" :class="{appear: top_panel_appear}" @mouseenter="topPanelMouse(true)" @mouseleave="topPanelMouse(false)">
       <div class="panel-buttons-container">
           <div class="panel-buttons-wrapper-left">
-              <button class="panel-button">Apps</button> 
+              <button class="panel-button" @mouseenter="toggleContextAppear(true, 'app')" @mouseleave="toggleContextAppear(false, 'app')" @click="toggleContextAppearClick('app')">Apps</button> 
           </div>
           <div class="panel-buttons-wrapper-center">
               <button class="panel-button">{{month}} {{ hour }} : {{ minute }} : {{ second }} {{ ampm }}</button>
@@ -46,7 +78,8 @@
           </div>
       </div>
     </div>
-    <appContext class="app-context"/>
+    <appContext class="app-context" :class="{appear: app_appear}"/>
+    <timeContext class="time-context"/>
 
 </template>
 
@@ -74,12 +107,12 @@
     align-items: center;
   }
 
-  .top-panel:hover .panel-buttons-wrapper-left,
-  .top-panel:hover .panel-buttons-wrapper-right {
+  .top-panel.appear .panel-buttons-wrapper-left,
+  .top-panel.appear .panel-buttons-wrapper-right {
     opacity: 1;
   }
 
-  .top-panel:hover {
+  .top-panel.appear {
     background-color: rgba(84, 82, 82, 0.32);
   }
 
@@ -124,6 +157,19 @@
   .app-context {
     margin-top: 50px;
     margin-left: 40px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .app-context.appear {
     opacity: 1;
+  }
+
+  .time-context {
+    position: absolute;
+    top: 50px;
+    right: 500px;
+    margin-left: 50%;
+    opacity: 1;
+    transition: opacity 0.3s ease;
   }
 </style>

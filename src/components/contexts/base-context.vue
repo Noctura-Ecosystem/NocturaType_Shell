@@ -1,5 +1,5 @@
 <template>
-    <div class="context-background">
+    <div class="context-background" @mouseenter.self="$emit('mouseenter')" @mouseleave.self="$emit('mouseleave')">
       <label class="context-label">{{ label }}</label>
       <slot class="context-content"></slot>
     </div>
