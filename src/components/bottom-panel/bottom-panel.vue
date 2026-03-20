@@ -22,13 +22,13 @@
   };
 
   function onEnter() {
-    console.log("Hovering");
+    console.log("BOTTOM-PANEL: Hovering");
     hovered.value = true;
     leaving.value = false;
   }
 
   function onLeave() {
-    console.log("Leaving");
+    console.log("BOTTOM-PANEL: Leaving");
     leaving.value = true;
     hovered.value = false;
   }

@@ -53,3 +53,14 @@
 - Context menu designs have been made
 
 ---
+## SAMPLE 2.5
+**Date:** 2026-03-20 08:50:25
+
+- Added buttons to the panels including a digital clock
+- These are the changene on the buttons:-
+    - Previously, We had only implemented one wrapper for all the buttons
+    - This is bad as I wanted buttons at the left, center and right of the panel
+    - Hence, inside the main wrapper, 3 sub-wrappers were made for the left, center and right buttons
+    - The center buttons will NOT be completly hidden if the panel is out of focus
+
+---
