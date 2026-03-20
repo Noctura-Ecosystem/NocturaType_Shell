@@ -45,3 +45,11 @@
 - Fixed some file names
 
 ---
+## SAMPLE 2.4
+**Date:** 2026-03-20 07:14:41
+
+- Added the buttons for top-panel
+- The scroll issue hasnt been fixed yet
+- Context menu designs have been made
+
+---
