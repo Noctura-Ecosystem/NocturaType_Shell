@@ -64,3 +64,14 @@
     - The center buttons will NOT be completly hidden if the panel is out of focus
 
 ---
+## SAMPLE 2.6
+**Date:** 2026-03-20 19:30:57
+
+- Implemented the context
+- Here is how the context works
+    - There is a base context in 'src/components/contexts/base-context.vue'
+    - It can then be imported to make more specialized contexts
+    - For example, the app-context
+- The context dosent have a hide feature yet
+
+---

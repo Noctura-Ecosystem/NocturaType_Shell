@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import {ref, onMounted} from "vue";
+    import appContext from "../contexts/apps-context.vue";
     let hover = ref(false);
     function topPanelMouse(mouse: boolean) {
         hover.value = mouse;
@@ -35,7 +36,7 @@
     <div class="top-panel" :class="{hover: hover}" @mouseenter="topPanelMouse(true)" @mouseleave="topPanelMouse(false)">
       <div class="panel-buttons-container">
           <div class="panel-buttons-wrapper-left">
-              <button class="panel-button">Apps</button>
+              <button class="panel-button">Apps</button> 
           </div>
           <div class="panel-buttons-wrapper-center">
               <button class="panel-button">{{month}} {{ hour }} : {{ minute }} : {{ second }} {{ ampm }}</button>
@@ -45,6 +46,8 @@
           </div>
       </div>
     </div>
+    <appContext class="app-context"/>
+
 </template>
 
 
@@ -59,7 +62,7 @@
     background-color: rgba(84, 82, 82, 0.07);
     backdrop-filter: blur(10px);
     border-radius: 30px;
-    height: 45px;
+    height: 5%;
     width: 95vw;
     transition: background-color 0.5s ease;
     will-change: transform, background-color;
@@ -117,5 +120,10 @@
 
   .panel-button:hover {
     background: rgba(255, 255, 255, 0.23);
+  }
+  .app-context {
+    margin-top: 50px;
+    margin-left: 40px;
+    opacity: 1;
   }
 </style>
