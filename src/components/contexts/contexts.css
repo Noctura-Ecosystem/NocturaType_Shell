@@ -33,7 +33,9 @@
 .time-style {
     display: flex;
     width: fit-content;
-    margin: 0 auto;
+    position: fixed;   /* or absolute */
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .time-label {
@@ -49,8 +51,8 @@
 }
 
 .time-content {
-  width: 700px;
-  height: 300px;
+  width: 37vw;
+  height: 32vh;
   padding: 20px;
 }
 
@@ -66,9 +68,10 @@
 }
 
 .time-info {
-    position: absolute;
-    margin-left: 69%;
-    margin-bottom: 00%;
-    width: 23%;
-    height: 80%;
+    position: relative;
+    left: 77%;
+    bottom: 100%;
+    width: 25%;
+    height: 100%;
 }
+

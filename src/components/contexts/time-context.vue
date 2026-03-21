@@ -11,14 +11,16 @@
 </script>
 
 <template>
-    <context class="time-style" :label="time_label">
-        <label class="time-label">{{ week}} {{ day }} {{ year }}</label>
-        <div class="time-content">
-            <div class="time-calander"></div>
-            <div class="time-msgBox"></div>
-            <div class="time-info"></div>
-        </div>
-    </context>
+    <div class="time-root">
+        <context class="time-style" :label="time_label">
+            <label class="time-label">{{ week}} {{ day }} {{ year }}</label>
+            <div class="time-content">
+                <div class="time-calander"></div>
+                <div class="time-msgBox"></div>
+                <div class="time-info"></div>
+            </div>
+        </context>
+    </div>
 </template>
 
 <script lang="ts">
