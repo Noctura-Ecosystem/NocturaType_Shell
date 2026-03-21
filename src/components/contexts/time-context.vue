@@ -16,8 +16,17 @@
             <label class="time-label">{{ week}} {{ day }} {{ year }}</label>
             <div class="time-content">
                 <div class="time-calander"></div>
-                <div class="time-msgBox"></div>
-                <div class="time-info"></div>
+                <div class="time-msgBox">
+                     <div class="message-box">
+                        <h2 class="title">Title</h2>
+                        <p class="content">
+                            insert msg here
+                        </p>
+                    </div>
+                </div>
+                <div class="time-info">
+                    <!-- insert widgets -->
+                </div>
             </div>
         </context>
     </div>

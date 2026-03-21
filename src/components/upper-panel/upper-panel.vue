@@ -22,11 +22,18 @@
     
     let app_appear = false;
     let app_hide_freeze = false;
+    let time_appear = false;
+    let time_hide_freeze = false;
     function toggleContextAppear(toggle: boolean, context: String) {
       switch (context) {
         case "app":
           if (!app_hide_freeze) {
             app_appear = toggle;
+          }
+          break;
+        case "time":
+          if (!time_hide_freeze) {
+            time_appear = toggle;
           }
       }
       console.log(`TOGGLED CONTEXT:- ${toggle} ${context}`)
@@ -44,7 +51,18 @@
             app_hide_freeze = false
             toggleContextAppear(false, context)
           }
+          break;
+        case "time":
+          time_hide_freeze = !time_hide_freeze
+          if (time_hide_freeze) {
+            toggleContextAppear(true, context)
+            time_hide_freeze = true
+          } else {
+            time_hide_freeze = false
+            toggleContextAppear(false, context)
+          }
       }
+        
       console.log(`FREEZE CONTEXT:- ${context}`)
     }
     let top_panel_appear = false;
@@ -71,7 +89,7 @@
               <button class="panel-button" @mouseenter="toggleContextAppear(true, 'app')" @mouseleave="toggleContextAppear(false, 'app')" @click="toggleContextAppearClick('app')">Apps</button> 
           </div>
           <div class="panel-buttons-wrapper-center">
-              <button class="panel-button">{{month}} {{ hour }} : {{ minute }} : {{ second }} {{ ampm }}</button>
+              <button class="panel-button" @mouseenter="toggleContextAppear(true, 'time')" @mouseleave="toggleContextAppear(false, 'time')" @click="toggleContextAppearClick('time')" >{{month}} {{ hour }} : {{ minute }} : {{ second }} {{ ampm }}</button>
           </div>
           <div class="panel-buttons-wrapper-right">
               <button class="panel-button">Wifi-Battery-Bluetooth</button>
@@ -79,7 +97,7 @@
       </div>
     </div>
     <appContext class="app-context" :class="{appear: app_appear}"/>
-    <timeContext class="time-context"/>
+    <timeContext class="time-context" :class="{appear: time_appear}" />
 
 </template>
 
@@ -169,7 +187,10 @@
     top: 50px;
     right: 500px;
     margin-left: 50%;
-    opacity: 1;
+    opacity: 0;
     transition: opacity 0.3s ease;
+  }
+  .time-context.appear {
+    opacity: 1;
   }
 </style>
