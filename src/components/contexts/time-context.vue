@@ -1,5 +1,7 @@
 <script setup lang="ts">
     import context from "../contexts/base-context.vue";
+    import calander from "../others/calander.vue";
+    import todo from "../others/Todo.vue";
     let day = 1;
     let week = "";
     let weeks = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -15,7 +17,9 @@
         <context class="time-style" :label="time_label">
             <label class="time-label">{{ week}} {{ day }} {{ year }}</label>
             <div class="time-content">
-                <div class="time-calander"></div>
+                <div class="time-calander">
+                    <calander />
+                </div>
                 <div class="time-msgBox">
                      <div class="message-box">
                         <h2 class="title">Title</h2>
@@ -25,7 +29,8 @@
                     </div>
                 </div>
                 <div class="time-info">
-                    <!-- insert widgets -->
+                    <div class="todo-title">To-Do</div>
+                    <todo />
                 </div>
             </div>
         </context>

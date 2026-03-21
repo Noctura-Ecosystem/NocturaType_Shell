@@ -51,7 +51,7 @@
 }
 
 .time-content {
-  width: 37vw;
+  width: 42vw;
   height: 32vh;
   padding: 20px;
 }
@@ -76,6 +76,7 @@
     bottom: 100%;
     width: 25%;
     height: 100%;
+    top: -87%;
 }
 
 .message-box {
@@ -96,5 +97,17 @@
 .content {
   font-size: 15px;
   color: #666;
+}
+
+.todo-title {
+  position: absolute;
+  margin-top: 10px;
+  display: inline-block;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: rgba(135, 131, 131, 0.275);
+  line-height: 1;
+  padding: 0;
+  margin-left: 11px;
 }
 

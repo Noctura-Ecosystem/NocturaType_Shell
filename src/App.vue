@@ -11,10 +11,10 @@
 </template>
 
 <style>
-  * { /* for dev */
+/*
+  * { /* for dev *//*
     outline: 1px solid red;
-  }
-
+  }*/
   html, body {
     overflow: hidden;
     overflow-x: hidden;
@@ -25,7 +25,7 @@
     position: relative;
     height: 100vh;
     width: 100vw;
-    background-image: url("/assets/My_cool_flamingo_wallpaper.png");
+    background-image: url("/My_cool_flamingo_wallpaper.png");
     background-size: cover;
     background-position: center;
     overflow: hidden;
