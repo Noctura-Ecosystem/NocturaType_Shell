@@ -1,6 +1,11 @@
 <script setup lang="ts">
   import bottomPanel from "./components/bottom-panel/bottom-panel.vue"
   import upperPanel from "./components/upper-panel/upper-panel.vue"
+
+  document.addEventListener('keydown', e => {
+    e.preventDefault()
+  });
+
 </script>
 
 <template>

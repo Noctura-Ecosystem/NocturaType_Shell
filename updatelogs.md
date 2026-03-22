@@ -114,3 +114,16 @@
 - No bugs found in this sample
 
 ---
+## PLAN 2.74
+**Date:** 2026-03-22 18:46:42
+
+- I will be disable the devtools in the official release
+- Besides this, everything else should be **Exactly** the same as the official release
+
+---
+## SAMPLE 2.75
+**Date:** 2026-03-22 18:46:42
+
+- Prevented default action from browser when using shortcuts
+
+---

@@ -12,9 +12,12 @@
   "app": {
     "windows": [
       {
-        "title": "nocturade-shell--type",
+        "title": "NocturaType",
         "width": 800,
-        "height": 600
+        "height": 600,
+        "resizable": true,
+        "fullscreen": true,
+        "decorations": false
       }
     ],
     "security": {
