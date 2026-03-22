@@ -103,7 +103,7 @@
 - Added the following featurures:-
     - Calander
     - To-do list
-- No new issues found in this this version
+- No new issues found in this this sample
 
 ---
 ## SAMPLE 2.74
