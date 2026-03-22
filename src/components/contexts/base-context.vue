@@ -32,6 +32,7 @@ export default {
 }
 
 .context-label {
+  margin-top: 10px;
   display: inline-block;
   font-size: 2rem;
   font-weight: 700;

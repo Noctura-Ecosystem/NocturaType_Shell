@@ -7,14 +7,31 @@
   <div class="background">
     <bottomPanel />
     <upperPanel />
+    <div class="line"></div>
   </div>
 </template>
 
 <style>
+
+/* for dev */
+
 /*
-  * { /* for dev *//*
+
+  * {
     outline: 1px solid red;
-  }*/
+  }
+
+  .line {
+    position: absolute;
+    width: 100vw;
+    height: 1px;
+    top: 457px;
+    background-color: red;
+  }
+
+*/
+
+
   html, body {
     overflow: hidden;
     overflow-x: hidden;
@@ -25,7 +42,7 @@
     position: relative;
     height: 100vh;
     width: 100vw;
-    background-image: url("/My_cool_flamingo_wallpaper.png");
+    background-image: url("/assets/My_cool_flamingo_wallpaper.png");
     background-size: cover;
     background-position: center;
     overflow: hidden;
