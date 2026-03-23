@@ -4,21 +4,26 @@
   import { listen } from '@tauri-apps/api/event'
   const hovered = ref(false);
   const leaving = ref(false);
-  const icons = ref<AppIcon[]>([]);
+  let icons = ref<AppIcon[]>([]);
 
   type AppIcon = {
     name: string
-    src: string
+    path: string
   }
 
-  function handleBackendMessage(payload: AppIcon) {
-    const path = `/assets/${payload.src.replace(/^\/+/, "")}`;
-    const name = payload.name.replace(/^\/+/, "");
-    console.log(`PATH: ${path},  NAME: ${name}`);
-    icons.value.push({
-      name: name,
-      src: path
-    });
+
+  function handleBackendMessage(payloads: AppIcon[]) {
+    icons = ref<AppIcon[]>([]);
+    for (const payload of payloads){
+      console.log("PAYLOAD", payload)
+      const path = `/assets/${payload.path.replace(/^\/+/, "")}`;
+      const name = payload.name.replace(/^\/+/, "");
+      console.log(`PATH: ${path},  NAME: ${name}`);
+      icons.value.push({
+        name: name,
+        path: path
+      });
+    }
   };
 
   function onEnter() {
@@ -35,15 +40,12 @@
 
   onMounted(async () => {
     try {
-      const unlisten = await listen<AppIcon>("add-app", (event) => {
+      const unlisten = await listen<AppIcon[]>("panel_apps_updated", (event) => {
+        console.log("GOT UPDATE:- ", event.payload)
         handleBackendMessage(event.payload);
       });
 
-      /* example apps*/
-      await invoke("add_app", {appName: "Realy Cool App", appPath: "Realy_Cool_App.png"}); /* in case of weird proportions*/
-      await invoke("add_app", {appName: "Another Realy Cool App", appPath: "help-about.svg"}); /* normal test data */
-      await invoke("add_app", {appName: "One more", appPath: "help-about.svg"}); /* one more normal test data */
-      await invoke("add_app", {appName: "Last one i swear", appPath: "help-about.svg"}); /* one more normal test data */
+      await invoke("app_pin_listener");
 
       return unlisten;
     } 
@@ -52,13 +54,17 @@
     }
   });
 
+  function open_app(icon: string, path: string, index: number) {
+    console.log(icon, path, index)
+  }
+
 
 </script>
 
 <template>
   <div class="panel-background" :class="{ hovered: hovered, leaving: leaving}" @mouseenter="onEnter" @mouseleave="onLeave">
-    <button v-for="(icon, index) in icons" :key="index" class="img-wrapper">
-      <img :src="icon.src" class="app-icon"/>
+    <button v-for="(icon, index) in icons" :key="index" class="img-wrapper" @click="open_app(icon.name, icon.path, index)">
+      <img :src="icon.path" class="app-icon"/>
       <span class="tooltip">{{ icon.name }}</span>
     </button>
   </div>

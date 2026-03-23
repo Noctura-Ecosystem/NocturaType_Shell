@@ -21,7 +21,6 @@
 /* for dev */
 
 /*
-
   * {
     outline: 1px solid red;
   }
@@ -33,9 +32,7 @@
     top: 457px;
     background-color: red;
   }
-
 */
-
 
   html, body {
     overflow: hidden;

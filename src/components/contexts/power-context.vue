@@ -20,25 +20,25 @@ const title = "Power"
                 </button>
             </div>
             <div class="power-toggle">
-                <label>Wi-Fi</label>
+                <label>Bluetooth</label>
                 <button>
                     <!--icon-->
                 </button>
             </div>
             <div class="power-toggle">
-                <label>Wi-Fi</label>
+                <label>Volume</label>
                 <button>
                     <!--icon-->
                 </button>
             </div>
             <div class="power-toggle">
-                <label>Wi-Fi</label>
+                <label>Screen</label>
                 <button>
                     <!--icon-->
                 </button>
             </div>
             <div class="power-toggle">
-                <label>Wi-Fi</label>
+                <label>Airplane<br>mode</label>
                 <button>
                     <!--icon-->
                 </button>

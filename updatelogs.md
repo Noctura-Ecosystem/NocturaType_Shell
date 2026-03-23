@@ -127,3 +127,14 @@
 - Prevented default action from browser when using shortcuts
 
 ---
+## SAMPLE 2.8
+**Date:** 2026-03-23 13:32:21
+
+- Fixed some variable/attribute names
+- Added json feature to automatically fill up the bottom panel based on the content of 'panel_app.json'
+- Features of this new feature include:-
+    - At the start, it will send the json file
+    - Then everytime file changes, the icon array's content will be overwritten with the new data
+    - this overwriting is done so we can handle, deleting, adding, the deletion of specific apps position and rearanging with no chance of bugs appearing
+
+---
