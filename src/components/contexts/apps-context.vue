@@ -1,52 +1,61 @@
 <script setup lang="ts">
-    import {ref, onMounted } from "vue";
-    import context from "../contexts/base-context.vue";
-    import {invoke} from "@tauri-apps/api/core";
+  import { ref, onMounted } from "vue";
+  import context from "../contexts/base-context.vue";
+  import { invoke, convertFileSrc } from "@tauri-apps/api/core";
 
-    type App ={
-      name: string
-      exec: string
-      icon_url: string
-      description: string
+  type App = {
+    name: string;
+    exec: string;
+    icon_path: string;
+    description: string;
+  };
+
+  const apps = ref<App[]>([]);
+  const loading = ref<boolean>(true);
+  const error = ref<string | null>(null);
+
+  async function fetchApps(): Promise<App[]> {
+    try {
+      const fetchedApps = await invoke<App[]>('list_apps');
+      const processedApps = fetchedApps.map(app => ({
+        ...app,
+        icon_path: app.icon_path ? convertFileSrc(app.icon_path) : ''
+      }));
+      return processedApps;
+    } catch (err) {
+      console.error('Failed to fetch apps', err);
+      error.value = `Failed to load applications: ${err}`;
+      return [];
     }
+  }
 
-
-    const apps = ref<App[]>([]);
-
-    async function fetchApps(): Promise<App[]> {
-      try {
-        const apps = await invoke<App[]>('list_apps');
-        return apps;
-      } catch (err) {
-        console.error('Failed to fetch apps', err);
-        return [];
-      }
-    }
-
-    onMounted(async() => {
+  onMounted(async () => {
+    try {
       apps.value = await fetchApps();
-      for (const app of apps.value) {
-        console.log(app.icon_url);
-      }
-    })
+    } catch (err) {
+      console.error('Mount error:', err);
+      error.value = 'Failed to initialize app list';
+    } finally {
+      loading.value = false;
+    }
+  });
 </script>
 
 <template>
-    <context :label="title">
-        <div class="items-wrapper">
-            <div class="item">
-              <img class="item-img" src="../../../assets/My_cool_flamingo_wallpaper.png"></img>
-              <span class="item-span">My really cool flamingo app</span>
-            </div>
-            <div v-for="(app, index) in apps" :key="index" :data-exec="app.exec" class="item">
-              <img v-if="app.icon_url" :src="`./${app.icon_url}`" class="item-img" />
-              <span class="item-span">{{ app.name }}</span>
-            </div>
+  <context :label="title">
+    <div class="items-wrapper">
+      <div v-for="(app, index) in apps" :key="index" :data-exec="app.exec" class="item">
+        <img v-if="app.icon_path" :src="app.icon_path" :alt="app.name" class="item-img" />
+        <div v-else class="placeholder-icon">
+          <span>{{ app.name.charAt(0).toUpperCase() }}</span>
         </div>
-    </context>
+        <span class="item-span">{{ app.name }}</span>
+      </div>
+    </div>
+  </context>
 </template>
 
-<<style src="../contexts/contexts.css"></style>>
+<style src="../contexts/contexts.css"></style>
 
 <script lang="ts">
   const title = "Apps";

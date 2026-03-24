@@ -151,3 +151,17 @@
 - ISSUES:- the icons are not loading properly
 
 ---
+## 2.82
+**Date:** 2026-03-25 01:25:10
+
+- Fixed the app icon issue
+- Rearranged the icon:-
+    - The issue was that you can access out of project files via tauri
+    - So I thought to use a resource_dir but that idea only works for production not development
+    - Hence, now im using the built in 'convertFileSrc' tauri function
+    - It turns these absoulute files into urls you can use in your frontend
+    - WARNING:- when using this technique, BE SURE TO UPDATE THE src-tauri/tauri.conf.json:-
+    - update CSP
+    - assetProtocol must be enabled and set the scopes
+
+---

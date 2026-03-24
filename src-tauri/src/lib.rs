@@ -5,9 +5,7 @@ use std::sync::{Arc, Mutex};
 use tauri::{Emitter, State, Window};
 use freedesktop_desktop_entry::{default_paths, get_languages_from_env, Iter};
 use freedesktop_icons::lookup;
-use std::fs;
 use std::path::PathBuf;
-use tauri::Manager;
 
 #[derive(Deserialize, Serialize, Debug)]
 struct AppsJsonified {
@@ -33,7 +31,7 @@ impl WatcherState {
 struct AppInfo {
     name: String,
     exec: String,
-    icon_url: Option<String>,
+    icon_path: Option<String>,
     description: String,
 }
 
@@ -81,46 +79,43 @@ fn app_pin_listener(window: Window, state: State<'_, Arc<WatcherState>>) -> Resu
     *state.watcher.lock().unwrap() = Some(watcher);
     Ok(())
 }
-fn copy_icon_to_cache(icon_path: &PathBuf, icons_dir: &PathBuf) -> PathBuf {
-    let file_name = icon_path.file_name().expect("no file name");
-    let target_path = icons_dir.join(file_name);
-    if !target_path.exists() {
-        fs::copy(icon_path, &target_path).expect("failed to copy icon");
-    }
-    target_path
-}
-
-
 #[tauri::command]
-async fn list_apps(app: tauri::AppHandle) -> Vec<AppInfo> {
+async fn list_apps() -> Vec<AppInfo> {
     let locales = get_languages_from_env();
-    let apps = Iter::new(default_paths()).entries(Some(&locales)).collect::<Vec<_>>();
-    let resource_dir = app.path().resource_dir().expect("no resource dir found");
-    let icons_dir = resource_dir.join("app_icons");
-    fs::create_dir_all(&icons_dir).expect("failed to create icons dir");
-
+    let apps =  Iter::new(default_paths())
+        .entries(Some(&locales))
+        .filter(|entry| {
+            entry.type_() == Some("Application") && !entry.no_display()
+        });
     let mut result = Vec::new();
+    let mut fail = 0;
+    let mut total = 0;
 
-    for app_entry in apps {
-        let name = app_entry.name(&locales).unwrap_or("Unnamed App".into()).to_string();
-        let exec = app_entry.exec().map(|s| s.to_string()).unwrap_or_default();
-        let description = app_entry.comment(&locales).unwrap_or("No description".into()).to_string();
-
-        let icon_url = if let Some(icon_name) = app_entry.icon() {
-            lookup(icon_name).with_size(1024).find().map(|icon_path| {
-                let icon_file = icons_dir.join(icon_path.file_name().unwrap());
-                if !icon_file.exists() {
-                    fs::copy(&icon_path, &icon_file).expect("failed to copy icon");
-                }
-                format!("app_icons/{}", icon_file.file_name().unwrap().to_string_lossy())
-            })
-        } else {
-            None
-        };
-
-        result.push(AppInfo { name, exec, icon_url, description });
+    for app in apps {
+        total += 1;
+        let name = app.name(&locales).unwrap_or("Unnamed App".into());
+        let icon_name = app.icon().unwrap_or("No img".into());
+        let exec = app.exec().map(|s| s.to_string()).unwrap_or_default();
+        let description = app.comment(&locales).unwrap_or("No description".into()).to_string();
+        let mut icon_path = lookup(&icon_name).with_size(48).find();
+        if icon_path == None {
+            icon_path = lookup(&icon_name.replace("-", "_")).with_size(48).find();
+            if icon_path == None {
+                println!("ERROR WITH:- {}", &icon_name.replace("-", "_"));
+                fail += 1;
+                continue;
+            }
+        }
+        println!("{}, {}, {}, {:?}", name, exec, description, icon_path);
+        result.push(AppInfo{
+            name: name.to_string(),
+            exec,
+            icon_path: icon_path.map(|p: PathBuf| p.to_string_lossy().into_owned()),
+            description,
+        });
     }
-
+    println!("FAIL:- {}", fail);
+    println!("TOTAL:- {}", total);
     result
 }
 

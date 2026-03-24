@@ -21,7 +21,21 @@
       }
     ],
     "security": {
-      "csp": null
+      "csp": "default-src 'self'; img-src 'self' asset: https://asset.localhost",
+      "assetProtocol": {
+        "enable": true,
+        "scope": [
+          "$HOME/.local/share/icons/**",
+          "/usr/share/icons/**",
+          "/usr/share/pixmaps/**",
+          "**"
+        ]
+      }
+    }
+  },
+  "plugins": {
+    "fs": {
+      "requireLiteralLeadingDot": false
     }
   },
   "bundle": {
