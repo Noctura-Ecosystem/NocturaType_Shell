@@ -19,8 +19,6 @@
       month.value = months[now.getMonth()]
     }
 
-
-    
     let app_appear = false;
     let time_appear = false;
     let power_appear = false;
@@ -92,7 +90,7 @@
         console.log("TOP-PANEL:", top_panel_appear)
     }
 
-    onMounted(() => {
+    onMounted(async() => {
       updateTime()
       setInterval(updateTime, 1000)
     })

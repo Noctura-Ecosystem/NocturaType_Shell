@@ -11,6 +11,13 @@
     path: string
   }
 
+  type App ={
+    name: string
+    exec: string
+    icon_url: string
+    description: string
+  }
+
 
   function handleBackendMessage(payloads: AppIcon[]) {
     icons = ref<AppIcon[]>([]);

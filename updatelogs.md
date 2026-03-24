@@ -138,3 +138,16 @@
     - this overwriting is done so we can handle, deleting, adding, the deletion of specific apps position and rearanging with no chance of bugs appearing
 
 ---
+## SAMPLE 2.81
+**Date:** 2026-03-24 09:58:03
+
+- Added feature for the app context to load the apps from your device
+- Here are the things done to do this:-
+    - used freedesktop
+    - used freedesktop_icon
+    - bundled local resources for the frontend
+    - These 'resources' are just the icons
+    - freedesktop/freedesktop_icon is for fetching the icon and attributes of all the apps
+- ISSUES:- the icons are not loading properly
+
+---
