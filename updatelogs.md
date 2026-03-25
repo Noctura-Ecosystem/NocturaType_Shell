@@ -191,5 +191,6 @@
         - Change background
         - others..
 - Fixed other minor issues
+- emoji support for To-Do list
 
 ---
