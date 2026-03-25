@@ -151,7 +151,7 @@
 - ISSUES:- the icons are not loading properly
 
 ---
-## 2.82
+## SAMPLE 2.82
 **Date:** 2026-03-25 01:25:10
 
 - Fixed the app icon issue
@@ -165,9 +165,17 @@
     - assetProtocol must be enabled and set the scopes
 
 ---
-## 2.83
-**Date:** 2026-03-25 10:22:11
+## SAMPLE 2.83
+**Date:** 2026-03-25 12:23:11
 
 - Everything on the To-Do list is now stored in a json file at 'public/sys_data/tasks.json'
+
+---
+## SAMPLE 2.84
+**Date:** 2026-03-25 20:59:23
+
+- Corrected updatelog Titles
+- Made the contexts have a smooth hovering animation (blur on hover)
+- Fixed context appearance and upper panel appearance relation (if any context is visible, the panel will also be visible)
 
 ---

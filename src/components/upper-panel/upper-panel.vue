@@ -84,7 +84,7 @@
     let top_panel_appear = false;
 
     function topPanelMouse(mouse: boolean) {
-       if (!app_appear){
+       if (!app_appear && !power_appear && !time_appear){
         top_panel_appear = mouse;
        }
         console.log("TOP-PANEL:", top_panel_appear)

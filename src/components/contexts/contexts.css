@@ -164,13 +164,18 @@
 .power-toggle {
   width: 120px;
   height: 50px;
-  background-color: rgba(84, 82, 82, 0.3);
+  background-color: rgba(84, 82, 82, 0.1);
   border-radius: 15px;
   display: flex;
   padding: 0 8px;
   justify-content: flex-start;
   align-items: center;  
   flex: 0 1 auto;
+  transition: background-color 0.5s ease;
+}
+
+.power-toggle:hover {
+  background-color: rgba(84, 82, 82, 0.2);
 }
 
 
