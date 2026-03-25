@@ -9,6 +9,8 @@ use std::path::PathBuf;
 use std::fs::File;
 use serde_json;
 use std::io::BufWriter;
+use tauri::Manager; 
+
 
 
 
@@ -141,6 +143,12 @@ fn json_task(array: Vec<Task>) -> Result<(), String> {
 
     Ok(())
 }
+#[tauri::command]
+fn open_devtools(app: tauri::AppHandle) {
+    if let Some(webview_window) = app.get_webview_window("main") {
+        webview_window.open_devtools();
+    }
+}
 
 #[tauri::command]
 fn read_tasks() -> Result<Vec<Task>, String> {
@@ -158,7 +166,7 @@ pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
         .manage(Arc::new(WatcherState::new()))
-        .invoke_handler(tauri::generate_handler![app_pin_listener, list_apps, json_task, read_tasks])
+        .invoke_handler(tauri::generate_handler![app_pin_listener, list_apps, json_task, read_tasks, open_devtools])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

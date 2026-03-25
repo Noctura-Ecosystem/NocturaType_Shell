@@ -86,10 +86,11 @@ loadTasks();
 }
 
 .todo-input input {
+  font-family: "Noto Color Emoji", sans-serif;
   width: 100%;
   box-sizing: border-box;
   padding: 4px;
-  font-size: 10px;
+  font-size: 12px;
   border: 1px solid rgba(84, 82, 82, 0.4);
   background-color: rgba(84, 82, 82, 0.1);
   border-radius: 5px;
@@ -146,7 +147,9 @@ loadTasks();
 .todo-description {
   max-width: 100%;
   overflow-x: auto;
+  font-family: "Noto Color Emoji", sans-serif;
   height: 15px;
+  font-size: 12px;
 }
 
 .done {

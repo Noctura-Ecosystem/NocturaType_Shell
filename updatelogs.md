@@ -179,3 +179,17 @@
 - Fixed context appearance and upper panel appearance relation (if any context is visible, the panel will also be visible)
 
 ---
+## SAMPLE 2.85
+**Date:** 2026-03-25 23:56:17
+
+- Added a right-click context
+- Added Dev and Production features:-
+    - Dev:-
+        - Inspect tools
+        - Reload tool
+    - Production:-
+        - Change background
+        - others..
+- Fixed other minor issues
+
+---

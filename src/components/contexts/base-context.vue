@@ -21,10 +21,9 @@ export default {
     align-items: flex-start;
     flex-direction: column;
     backdrop-filter: blur(15px);
-    background-color: rgba(84, 82, 82, 0.1);
+    background-color: rgba(84, 82, 82, 0.2);
     border-radius: 18px;
     padding: 1rem;
-    min-width: 220px;
     min-height: 150px;
     width: max-content;
     height: auto;
