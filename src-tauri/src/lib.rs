@@ -6,6 +6,11 @@ use tauri::{Emitter, State, Window};
 use freedesktop_desktop_entry::{default_paths, get_languages_from_env, Iter};
 use freedesktop_icons::lookup;
 use std::path::PathBuf;
+use std::fs::File;
+use serde_json;
+use std::io::BufWriter;
+
+
 
 #[derive(Deserialize, Serialize, Debug)]
 struct AppsJsonified {
@@ -16,6 +21,12 @@ struct AppsJsonified {
 struct WatcherState {
     watcher: Arc<Mutex<Option<RecommendedWatcher>>>,
     last_content: Arc<Mutex<String>>,
+}
+
+#[derive(serde::Serialize, serde::Deserialize)]
+struct Task {
+    text: String,
+    done: bool,
 }
 
 impl WatcherState {
@@ -119,12 +130,35 @@ async fn list_apps() -> Vec<AppInfo> {
     result
 }
 
+#[tauri::command]
+fn json_task(array: Vec<Task>) -> Result<(), String> {
+    let file = std::fs::File::create("../public/sys_data/tasks.json")
+        .map_err(|e| e.to_string())?;
+    let writer = std::io::BufWriter::new(file);
+
+    serde_json::to_writer_pretty(writer, &array)
+        .map_err(|e| e.to_string())?;
+
+    Ok(())
+}
+
+#[tauri::command]
+fn read_tasks() -> Result<Vec<Task>, String> {
+    let file = std::fs::File::open("../public/sys_data/tasks.json")
+        .map_err(|e| e.to_string())?;
+    let reader = std::io::BufReader::new(file);
+
+    let tasks: Vec<Task> = serde_json::from_reader(reader)
+        .map_err(|e| e.to_string())?;
+    Ok(tasks)
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
         .manage(Arc::new(WatcherState::new()))
-        .invoke_handler(tauri::generate_handler![app_pin_listener, list_apps])
+        .invoke_handler(tauri::generate_handler![app_pin_listener, list_apps, json_task, read_tasks])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

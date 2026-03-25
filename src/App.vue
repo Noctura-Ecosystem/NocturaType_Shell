@@ -2,8 +2,16 @@
   import bottomPanel from "./components/bottom-panel/bottom-panel.vue"
   import upperPanel from "./components/upper-panel/upper-panel.vue"
 
-  document.addEventListener('keydown', e => {
-    e.preventDefault()
+  document.addEventListener('keydown', (e: KeyboardEvent) => {
+    const target = e.target as HTMLElement | null
+    const isInput =
+      target instanceof HTMLInputElement ||
+      target instanceof HTMLTextAreaElement ||
+      (target && target.isContentEditable);
+    if (isInput) return;
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+    }
   });
 
 </script>
@@ -38,7 +46,15 @@
     overflow: hidden;
     overflow-x: hidden;
     position: relative;
+    user-select: none;
+    -webkit-user-select: none;
   }
+
+  input, textarea, [contenteditable="true"] {
+    user-select: text;
+    -webkit-user-select: text;
+  }
+  
 
   .background {
     position: relative;

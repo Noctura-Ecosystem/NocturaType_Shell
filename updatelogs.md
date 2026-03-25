@@ -165,3 +165,9 @@
     - assetProtocol must be enabled and set the scopes
 
 ---
+## 2.83
+**Date:** 2026-03-25 10:22:11
+
+- Everything on the To-Do list is now stored in a json file at 'public/sys_data/tasks.json'
+
+---
