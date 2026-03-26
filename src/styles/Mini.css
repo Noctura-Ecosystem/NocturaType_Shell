@@ -1,0 +1,170 @@
+.mini-calendar {
+  width: 95%;
+  padding: 8px 10px;
+  border: 1px solid var(--color-base);
+  border-radius: 8px;
+  font-family: sans-serif;
+  font-size: 10px;
+  background: var(--color-mild);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.header button {
+  border: none;
+  background: var(--color-mild);
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 10px;
+  line-height: 1;
+}
+
+.weekdays,
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  text-align: center;
+}
+
+.days {
+    margin-top: 10px;
+}
+
+.weekdays span {
+  font-size: 9px;
+  font-weight: bold;
+  color: var(--test-secondary-head);
+  line-height: 1;
+}
+
+.days span {
+  padding: 3px 0;
+  border-radius: 4px;
+  background: var(--color-mild);
+  font-size: 9px;
+  line-height: 1.1;
+}
+
+
+
+.days span.empty {
+  background: transparent;
+}
+
+.days span.today {
+  background: var(--color-base);
+  color: white;
+  font-weight: bold;
+}
+
+.spacer {
+    height: 25px
+}
+.todo-block {
+  display: block;
+  margin-top: -46px;
+  height: 100%;
+  width: 90%;
+  padding: 6px;
+  border: 1px solid var(--color-mild);
+  border-radius: 8px;
+  font-family: sans-serif;
+  font-size: 10px;
+  background: var(--color-mild);
+}
+
+.todo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  font-weight: bold;
+}
+
+.todo-header button {
+  border: none;
+  background: var(--color-mild);
+  border-radius: 4px;
+  padding: 1px 6px;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.todo-input input {
+  font-family: "Noto Color Emoji", sans-serif;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 4px;
+  font-size: 12px;
+  border: 1px solid rgba(84, 82, 82, 0.4);
+  background-color: var(--color-mild);
+  border-radius: 5px;
+  margin-bottom: 4px;
+}
+
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  height: 73%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--color-mild);
+  padding: 3px 4px;
+  border-radius: 5px;
+}
+.todo-item
+.todo-item input {
+  margin: 0;
+}
+
+.todo-item input[type="checkbox"]{
+  display: none;
+}
+.todo-check {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  background-color: var(--color-base);
+  border: 1px solid var(--color-mild);
+  display: inline-block;
+  position: relative;
+}
+.todo-item input[type="checkbox"]:checked + span::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 0px;
+  width: 5px;
+  height: 10px;
+  border: solid var(--color-base);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+
+.todo-description {
+  max-width: 100%;
+  overflow-x: auto;
+  font-family: "Noto Color Emoji", sans-serif;
+  height: 15px;
+  font-size: 12px;
+}
+
+.done {
+  text-decoration: line-through;
+  color: var(--test-secondary-head);
+}

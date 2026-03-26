@@ -1,0 +1,165 @@
+.panel-background {
+  padding: 0 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  width: fit-content; 
+  min-width: 5%;
+  height: 70px;
+  position: absolute;
+  backdrop-filter: blur(10px);
+  background: var(--color-base);
+  border-radius: 30px;
+  left: 50%;
+  transform: translate(-50%, -50px);
+  bottom: -50px;
+  transform: translateX(-50%);
+  transition: transform 0.5s ease;
+}
+
+.panel-background.hovered {
+  transform: translateX(-50%) translateY(-64px);
+}
+
+.panel-background.leaving {
+  transform: translateX(-50%) translateY(0);
+}
+
+.img-wrapper {
+  all: unset;
+  position: relative;
+  display: inline-block;
+  background-color: transparent;
+}
+
+.app-icon {
+  background-color: transparent;
+  all: unset;
+  height: 48px;
+  width: 48px;
+  border-radius: 9px;
+  scale: 1.1;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-base);
+  backdrop-filter: blur(20px);
+  color: rgb(0, 0, 0);
+  padding: 4px 8px;
+  font-size: 14px;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  backdrop-filter: blur(9px);
+  width: 60px;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.img-wrapper:hover .tooltip {
+  opacity: 1;
+}
+
+.top-panel {
+  overflow: hidden;
+  display: flex;
+  position: fixed;
+  top: 10px;
+  background-color: var(--color-base);
+  backdrop-filter: blur(10px);
+  border-radius: 30px;
+  height: 5%;
+  width: 95vw;
+  transition: background-color 0.5s ease;
+  will-change: transform, background-color;
+  padding: 0px 30px;
+}
+
+.top-panel > * {
+  transition: opacity 0.5s ease;
+  align-items: center;
+}
+
+.top-panel.appear .panel-buttons-wrapper-left,
+.top-panel.appear .panel-buttons-wrapper-right {
+  opacity: 1;
+}
+
+.top-panel.appear {
+  background-color: var(--color-focus);
+}
+
+.panel-buttons-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 15px;
+}
+
+.panel-buttons-wrapper-left,
+.panel-buttons-wrapper-right {
+    opacity: 0;
+    display: flex;
+    gap: 15px;
+}
+
+.panel-buttons-wrapper-center {
+  display: flex;
+  justify-content: center;
+  border-radius: 18px;
+  gap: 15px;
+  opacity: 1;
+  background-color: var(--color-focus);
+}
+
+.panel-button {
+  flex-direction: row; 
+  padding: 10px 20px;
+  border: none;
+  border-radius: 18px;
+  backdrop-filter: blur(15px);
+  color: var(--text-contrast);
+  font-weight: 500;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.panel-button:hover {
+  background: var(--color-mild);
+}
+.app-context {
+  margin-top: 50px;
+  margin-left: 40px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.app-context.appear {
+  opacity: 1;
+}
+
+.time-context {
+  position: absolute;
+  top: 50px;
+  right: 500px;
+  margin-left: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.time-context.appear {
+  opacity: 1;
+}
+
+.power-context {
+  opacity: 0;
+  transition: opacity ease 0.3s;
+}
+
+.power-context.appear {
+  opacity: 1;
+}

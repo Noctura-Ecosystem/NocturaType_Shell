@@ -2,6 +2,8 @@
     import context from "../contexts/base-context.vue";
     import calander from "../others/calander.vue";
     import todo from "../others/Todo.vue";
+    import "./../../styles/Var.css"
+    import "./../../styles/Contexts.css"
     let day = 1;
     let week = "";
     let weeks = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -41,4 +43,3 @@
     const time_label = "Time";
 </script>
 
-<style src="../contexts/contexts.css"></style>

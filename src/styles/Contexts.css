@@ -12,9 +12,10 @@
   flex-direction: row;
   gap: 9px;
   border-radius: 15px;
+  transition: background-color 0.5s ease;
 }
 .item:hover {
-  background-color: rgba(84, 82, 82, 0.07);
+  background-color: var(--color-focus-mild);
 }
 
 .item-img {
@@ -26,6 +27,7 @@
 }
 
 .item-span {
+  color: var(--text-body);
   display: block;
   max-width: 200px;
 }
@@ -44,7 +46,7 @@
   display: inline-block;
   font-size: 1.2rem;
   font-weight: 700;
-  color: rgba(135, 131, 131, 0.275);
+  color: var(--text-secondary-head);
   line-height: 1;
   padding: 0;
   margin-left: 11px;
@@ -81,8 +83,8 @@
 
 .message-box {
   padding: 10px;
-  background: rgba(100, 100, 100, 0.155);
-  border: 2px solid #75757532;
+  background: var(--color-mild);
+  border: 2px solid var(--color-base);
   border-radius: 12px;
   width: 90%;
   height: 90%;
@@ -91,12 +93,12 @@
 .title {
   margin: 0 0 -10px;
   font-size: 22px;
-  color: #333;
+  color: var(--text-secondary-head);
 }
 
 .content {
   font-size: 15px;
-  color: #666;
+  color: var(--text-body);
 }
 
 .todo-title {
@@ -105,21 +107,20 @@
   display: inline-block;
   font-size: 1.2rem;
   font-weight: 700;
-  color: rgba(135, 131, 131, 0.275);
+  color: var(--text-secondary-head);
   line-height: 1;
   padding: 0;
   margin-left: 11px;
 }
 
-
 .power-context {
   position: fixed;
-  top: 8%;
+  top: 6%;
   right: 5%;
   width: 300px;
   min-height: 320px; 
   display: flex;
-  background: rgba(84, 82, 82, 0.1);
+  background: var(--color-base);
   border-radius: 15px;
   padding: 10px;
   box-sizing: border-box;
@@ -140,7 +141,7 @@
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  background: rgba(84, 82, 82, 0.1);
+  background: var(--color-base);
   backdrop-filter: blur(10px);
   border: none;
   cursor: pointer;
@@ -148,7 +149,7 @@
 }
 
 .power-top-button:hover {
-  background: rgba(84, 82, 82, 0.3);
+  background: var(--color-focus);
 }
 
 
@@ -164,7 +165,7 @@
 .power-toggle {
   width: 120px;
   height: 50px;
-  background-color: rgba(84, 82, 82, 0.1);
+  background-color: var(--color-base);
   border-radius: 15px;
   display: flex;
   padding: 0 8px;
@@ -175,14 +176,14 @@
 }
 
 .power-toggle:hover {
-  background-color: rgba(84, 82, 82, 0.2);
+  background-color: var(--color-focus);
 }
 
 
 .power-toggle label {
   font-size: 14px;
   font-weight: bolder;
-  color: #666;
+  color: var(--text-body);
 }
 
 .power-toggle button {
@@ -191,11 +192,68 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  border: 1px solid rgba(84, 82, 82, 0.25);
-  background-color: rgba(84, 82, 82, 0.2);
+  border: 2px solid var(--color-mild);
+  background-color: var(--color-base);
   transition: background-color ease 0.6s;
 }
 
 .power-toggle button:hover {
-  background-color: rgba(84, 82, 82, 0.34);
+  background-color: var(--color-focus);
+}
+
+.context-background {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  backdrop-filter: blur(15px);
+  background-color: var(--color-base);
+  border-radius: 18px;
+  padding: 1rem;
+  min-height: 150px;
+  width: max-content;
+  height: auto;
+  transition: background-color 0.3s ease;
+}
+
+.context-label {
+  margin-top: 10px;
+  display: inline-block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-head);
+  line-height: 1;
+  padding: 0;
+  margin-left: 11px;
+}
+
+.context-background:hover {
+  background-color: var(--color-focus-mild);
+}
+
+.right-base {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  width: fit-content;
+  scale: 0.9;
+}
+.right-items {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 10px;
+}
+.right-item{
+  display: flex;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: var(--color-mild);
+  transition: background-color 0.6s ease;
+}
+.right-item span{
+  color: var(--text-body);
+}
+.right-item:hover {
+  background-color: var(--color-focus);
 }

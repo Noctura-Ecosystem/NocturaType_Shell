@@ -2,6 +2,8 @@
   import { ref, onMounted } from "vue";
   import context from "../contexts/base-context.vue";
   import { invoke, convertFileSrc } from "@tauri-apps/api/core";
+  import "./../../styles/Var.css"
+  import "./../../styles/Contexts.css"
 
   type App = {
     name: string;
@@ -55,7 +57,6 @@
   </context>
 </template>
 
-<style src="../contexts/contexts.css"></style>
 
 <script lang="ts">
   const title = "Apps";

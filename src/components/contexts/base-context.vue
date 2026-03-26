@@ -6,6 +6,8 @@
 </template>
 
 <script lang="ts">
+import "./../../styles/Var.css"
+import "./../../styles/Contexts.css"
 export default {
   props: {
     label: {
@@ -14,34 +16,3 @@ export default {
     }
   }
 }</script>
-
-<style scoped>
-  .context-background {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    backdrop-filter: blur(15px);
-    background-color: rgba(84, 82, 82, 0.2);
-    border-radius: 18px;
-    padding: 1rem;
-    min-height: 150px;
-    width: max-content;
-    height: auto;
-    transition: background-color 0.3s ease;
-  }
-
-  .context-label {
-    margin-top: 10px;
-    display: inline-block;
-    font-size: 2rem;
-    font-weight: 700;
-    color: rgba(135, 131, 131, 0.275);
-    line-height: 1;
-    padding: 0;
-    margin-left: 11px;
-  }
-
-  .context-background:hover {
-    background-color: rgba(84, 82, 82, 0.25);
-  }
-</style>

@@ -2,6 +2,8 @@
 import baseContext from './base-context.vue';
 import { invoke } from '@tauri-apps/api/core';
 import {ref} from "vue"
+import "./../../styles/Var.css"
+import "./../../styles/Contexts.css"
 declare global {
   interface Window {
     openMenu?: (e: MouseEvent) => void
@@ -54,9 +56,9 @@ function handleFileChange(event: Event) {
 </script>
 
 <template>
-    <baseContext v-show="menuVisible" :label="title" class="base" :style="{ left: menuX + 'px', top: menuY + 'px' }">
-        <div class="items">
-            <div class="item">
+    <baseContext v-show="menuVisible" :label="title" class="right-base" :style="{ left: menuX + 'px', top: menuY + 'px' }">
+        <div class="right-items">
+            <div class="right-item">
                 <span @click="openFileDialog()">Change background</span>
                   <input
                     type="file"
@@ -66,44 +68,15 @@ function handleFileChange(event: Event) {
                     style="position: absolute; width: 0; height: 0; overflow: hidden; border: 0; padding: 0; margin: 0; clip: rect(0 0 0 0);"
                 />
             </div>
-            <div class="item">
+            <div class="right-item">
                 <span>Open Setting</span>
             </div>
-            <div class="item">
+            <div class="right-item">
                 <span @click="reloadWindow()">[DEV] Reload</span>
             </div>
-            <div class="item">
+            <div class="right-item">
                 <span @click="openDevTools()">[DEV] Inspect</span>
             </div>
         </div>
     </baseContext>
 </template>
-
-<style>
-    .base {
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        z-index: 1000;
-        width: fit-content;
-        scale: 0.9;
-    }
-    .items {
-        display: flex;
-        flex-direction: column;
-        padding: 10px;
-        gap: 10px;
-    }
-    .item{
-        display: flex;
-        padding: 10px;
-        background-color: rgba(84, 82, 82, 0.1);
-        transition: background-color 0.6s ease;
-    }
-    .item span{
-        color: #666;
-    }
-    .item:hover {
-        background-color: rgba(84, 82, 82, 0.3);
-    }
-</style>

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import context from "../contexts/base-context.vue";
+import "./../../styles/Var.css"
+import "./../../styles/Contexts.css"
 const title = "Power"
 </script>
 
@@ -54,5 +56,3 @@ const title = "Power"
     </context>
 </template>
 
-
-<style lang="css" src="../contexts/contexts.css"></style>
