@@ -4,19 +4,19 @@
     import timeContext from "../contexts/time-context.vue";
     import powerContext from "../contexts/power-context.vue";
 
-    const hour = ref(0);
-    const minute = ref(0);
-    const second = ref(0);
+    const hour = ref("00");
+    const minute = ref("00");
+    const second = ref("00");
     const ampm = ref("am");
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     const month = ref("Jan");
     function updateTime() {
       const now = new Date();
-      hour.value = now.getHours();
-      ampm.value = hour.value <= 12 ? "am" : "pm"
-      minute.value = now.getMinutes();
-      second.value = now.getSeconds();
-      month.value = months[now.getMonth()]
+      hour.value = now.getHours().toString().padStart(2, '0');
+      ampm.value = now.getHours() < 12 ? "am" : "pm";
+      minute.value = now.getMinutes().toString().padStart(2, '0');
+      second.value = now.getSeconds().toString().padStart(2, '0');
+      month.value = months[now.getMonth()];
     }
 
     let app_appear = false;
