@@ -10,7 +10,6 @@
     - I used Vue for my frontend famework due to its high popularity (more collaboration) and because it is lightweight
 
 ---
-
 ## SAMPLE 2
 **Date:** 2026-03-19 02:03:11
 
@@ -20,7 +19,6 @@
     - background immage issues
 
 ---
-
 ## SAMPLE 2.1
 **Date:** 2026-03-19 18:58:10
 
