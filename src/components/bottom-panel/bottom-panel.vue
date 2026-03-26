@@ -1,66 +1,25 @@
 <script setup lang="ts">
-  import  {ref, onMounted} from "vue"
   import { invoke } from "@tauri-apps/api/core";
   import { listen } from '@tauri-apps/api/event'
+  import { onMounted } from "vue";
   import "./../../styles/Panel.css";
   import "./../../styles/Var.css"
-  const hovered = ref(false);
-  const leaving = ref(false);
-  let icons = ref<AppIcon[]>([]);
-
-  type AppIcon = {
-    name: string
-    path: string
-  }
-
-
-  function handleBackendMessage(payloads: AppIcon[]) {
-    icons = ref<AppIcon[]>([]);
-    for (const payload of payloads){
-      console.log("PAYLOAD", payload)
-      const path = `/assets/${payload.path.replace(/^\/+/, "")}`;
-      const name = payload.name.replace(/^\/+/, "");
-      console.log(`PATH: ${path},  NAME: ${name}`);
-      icons.value.push({
-        name: name,
-        path: path
-      });
-    }
-  };
-
-  function onEnter() {
-    console.log("BOTTOM-PANEL: Hovering");
-    hovered.value = true;
-    leaving.value = false;
-  }
-
-  function onLeave() {
-    console.log("BOTTOM-PANEL: Leaving");
-    leaving.value = true;
-    hovered.value = false;
-  }
-
+  import {hovered, leaving,onEnter, onLeave, icons, open_app, AppIcon, handleBackendMessage} from "./../../scripts/bottom_panel.ts"
   onMounted(async () => {
     try {
-      const unlisten = await listen<AppIcon[]>("panel_apps_updated", (event) => {
+        const unlisten = await listen<AppIcon[]>("panel_apps_updated", (event) => {
         console.log("GOT UPDATE:- ", event.payload)
         handleBackendMessage(event.payload);
-      });
+        });
 
-      await invoke("app_pin_listener");
+        await invoke("app_pin_listener");
 
-      return unlisten;
+        return unlisten;
     } 
     catch (error) {
-      console.log("Error initializing dock:", error);
+        console.log("Error initializing dock:", error);
     }
-  });
-
-  function open_app(icon: string, path: string, index: number) {
-    console.log(icon, path, index)
-  }
-
-
+});
 </script>
 
 <template>

@@ -1,36 +1,10 @@
 <script setup lang="ts">
-  import { ref, onMounted } from "vue";
+import { onMounted } from "vue";
   import context from "../contexts/base-context.vue";
-  import { invoke, convertFileSrc } from "@tauri-apps/api/core";
   import "./../../styles/Var.css"
   import "./../../styles/Contexts.css"
-
-  type App = {
-    name: string;
-    exec: string;
-    icon_path: string;
-    description: string;
-  };
-
-  const apps = ref<App[]>([]);
-  const loading = ref<boolean>(true);
-  const error = ref<string | null>(null);
-
-  async function fetchApps(): Promise<App[]> {
-    try {
-      const fetchedApps = await invoke<App[]>('list_apps');
-      const processedApps = fetchedApps.map(app => ({
-        ...app,
-        icon_path: app.icon_path ? convertFileSrc(app.icon_path) : ''
-      }));
-      return processedApps;
-    } catch (err) {
-      console.error('Failed to fetch apps', err);
-      error.value = `Failed to load applications: ${err}`;
-      return [];
-    }
-  }
-
+  import { apps, fetchApps, loading, error } from "./../../scripts/apps_context.ts"
+  const title = "Apps";
   onMounted(async () => {
     try {
       apps.value = await fetchApps();
@@ -56,8 +30,3 @@
     </div>
   </context>
 </template>
-
-
-<script lang="ts">
-  const title = "Apps";
-</script>

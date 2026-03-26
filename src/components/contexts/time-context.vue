@@ -4,14 +4,7 @@
     import todo from "../others/Todo.vue";
     import "./../../styles/Var.css"
     import "./../../styles/Contexts.css"
-    let day = 1;
-    let week = "";
-    let weeks = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    let year = 0;
-    const now = new Date();
-    day = now.getDate();
-    week = weeks[now.getDay()]
-    year = now.getFullYear();
+    import {day, week, year} from "./../../scripts/time_context.ts"
 </script>
 
 <template>
