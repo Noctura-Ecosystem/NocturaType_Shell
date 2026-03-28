@@ -2,24 +2,11 @@
 import context from "../contexts/base-context.vue";
 import "./../../styles/Var.css"
 import "./../../styles/Contexts.css"
-import { listen } from '@tauri-apps/api/event'
-import { onMounted, ref } from "vue";
-import {invoke} from "@tauri-apps/api/core"
-const title = "Power"
-let WiFi = ref(false);
-let Theme = ref(false);
-let bluetooth = ref(false);
-let volume = ref(false);
-let screen = ref(false);
-let airplane = ref(false);
-type PanelJSON = {
-    "wifi": boolean,
-    "theme": boolean,
-    "bluetooth": boolean,
-    "volume": boolean,
-    "screen": boolean,
-    "airplane": boolean,
-}
+import { onMounted } from "vue";
+import { listen } from "@tauri-apps/api/event";
+import { title, WiFi, Theme, bluetooth, volume, screen, airplane, toggle, PanelJSON } from "./../../scripts/power.ts"
+import { invoke } from "@tauri-apps/api/core";
+
 onMounted(async () => {
     try {
         const unlisten = await listen<PanelJSON>("settings_updated", (event) => {
@@ -40,19 +27,6 @@ onMounted(async () => {
         console.log("Error initializing dock:", error);
     }
 });
-
-function toggle(catagory: String) {
-    switch (catagory) {
-        case "WiFi": WiFi.value = !WiFi.value; break;
-        case "theme": Theme.value = !Theme.value; break;
-        case "bluetooth": bluetooth.value = !bluetooth.value; break;
-        case "volume": volume.value = !volume.value; break;
-        case "screen": screen.value = !screen.value; break;
-        case "air": airplane.value = !airplane.value; break;
-        default: console.log("UNKNWON", catagory);
-    }
-    console.log(` DEBUG:- ${WiFi.value}, ${Theme.value}, ${bluetooth.value}, ${volume.value}, ${screen.value}, ${airplane.value}`)
-}
 
 </script>
 

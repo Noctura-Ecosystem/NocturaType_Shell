@@ -237,3 +237,9 @@
     - when active, there will be a focus
 
 ---
+## FIX 2.89
+**Date:** 2026-03-29 01:03:04
+
+- The script tag in the power vue file was made into a seperate ts file
+
+---
