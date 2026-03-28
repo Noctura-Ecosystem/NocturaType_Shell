@@ -224,3 +224,16 @@
     - upper_panel.ts
 
 ---
+## SAMPLE 2.89 -MAJOR
+**Date:** 2026-03-29 00:57:23
+
+- This is a Major update involving various fixes
+- First fix:- using system files for icons in bottom panel
+    - Used the same ConverFileSrc system as use in the app-context
+- Second fix:- Fixed flickering
+    - The issue happened as i forgot to setup a transition for opacity in the base-context
+- First feature:- The Power panel uses JSON
+    - This right now only supports Read
+    - when active, there will be a focus
+
+---

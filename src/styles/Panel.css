@@ -152,7 +152,7 @@
   transition: opacity 0.3s ease;
 }
 .time-context.appear {
-  opacity: 1;
+  opacity: 1 !important;
 }
 
 .power-context {

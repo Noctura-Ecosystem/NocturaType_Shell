@@ -1,0 +1,8 @@
+{
+    "wifi": true,
+    "theme": false,
+    "bluetooth": false,
+    "volume": false,
+    "screen": false,
+    "airplane": false
+}

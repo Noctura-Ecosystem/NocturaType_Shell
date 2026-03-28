@@ -20,6 +20,16 @@ struct AppsJsonified {
     path: String,
 }
 
+#[derive(Deserialize, Serialize, Debug)]
+struct SettingsJsonified {
+    wifi: bool,
+    theme: bool,
+    bluetooth: bool,
+    volume: bool,
+    screen: bool,
+    airplane: bool,
+}
+
 struct WatcherState {
     watcher: Arc<Mutex<Option<RecommendedWatcher>>>,
     last_content: Arc<Mutex<String>>,
@@ -40,6 +50,20 @@ impl WatcherState {
     }
 }
 
+struct SettingWatcherState {
+    watcher: Arc<Mutex<Option<RecommendedWatcher>>>,
+    last_content: Arc<Mutex<String>>,
+}
+
+impl SettingWatcherState {
+    fn new() -> Self {
+        Self {
+            watcher: Arc::new(Mutex::new(None)),
+            last_content: Arc::new(Mutex::new(String::new())),
+        }
+    }
+}
+
 #[derive(Serialize)]
 struct AppInfo {
     name: String,
@@ -48,35 +72,59 @@ struct AppInfo {
     description: String,
 }
 
+
+
 #[tauri::command]
-fn app_pin_listener(window: Window, state: State<'_, Arc<WatcherState>>) -> Result<(), String> {
+fn app_pin_listener(window: Window, state: State<'_, Arc<WatcherState>>,) -> Result<(), String> {
     let window = window.clone();
     let last_content = Arc::clone(&state.last_content);
-    if let Ok(apps_str) = std::fs::read_to_string("../public/sys_data/panel_apps.json") {
+
+    let path = "../public/sys_data/panel_apps.json";
+
+    if let Ok(apps_str) = std::fs::read_to_string(path) {
         {
             let mut last = last_content.lock().unwrap();
             *last = apps_str.clone();
         }
-        if let Ok(apps_json) = serde_json::from_str::<Vec<AppsJsonified>>(&apps_str) {
+
+        if let Ok(apps_json) =
+            serde_json::from_str::<Vec<AppsJsonified>>(&apps_str)
+        {
             let _ = window.emit("panel_apps_updated", &apps_json);
         }
     }
 
-    let mut watcher = RecommendedWatcher::new(
-        move |res| match res {
-            Ok(_) => {
-                if let Ok(apps_str) = std::fs::read_to_string("../public/sys_data/panel_apps.json") {
-                    let mut last = last_content.lock().unwrap();
-                    if *last != apps_str {
-                        *last = apps_str.clone();
-                        if let Ok(apps_json) = serde_json::from_str::<Vec<AppsJsonified>>(&apps_str) {
-                            println!("Updated panel json apps {:?}", apps_json);
-                            let _ = window.emit("panel_apps_updated", &apps_json);
+    let mut watcher = notify::RecommendedWatcher::new(
+        move |res: Result<notify::Event, notify::Error>| {
+            if let Ok(event) = res {
+                use notify::EventKind;
+
+                match event.kind {
+                    EventKind::Modify(notify::event::ModifyKind::Data(_)) => {
+                        if let Ok(apps_str) = std::fs::read_to_string(path) {
+                            let mut last = last_content.lock().unwrap();
+
+                            if *last != apps_str {
+                                *last = apps_str.clone();
+
+                                if let Ok(apps_json) =
+                                    serde_json::from_str::<Vec<AppsJsonified>>(&apps_str)
+                                {
+                                    let window = window.clone();
+
+                                    tauri::async_runtime::spawn(async move {
+                                        let _ = window.emit(
+                                            "panel_apps_updated",
+                                            &apps_json,
+                                        );
+                                    });
+                                }
+                            }
                         }
                     }
+                    _ => {}
                 }
             }
-            Err(e) => eprintln!("watch error: {:?}", e),
         },
         notify::Config::default(),
     )
@@ -84,14 +132,19 @@ fn app_pin_listener(window: Window, state: State<'_, Arc<WatcherState>>) -> Resu
 
     watcher
         .watch(
-            Path::new("../public/sys_data/panel_apps.json"),
-            RecursiveMode::NonRecursive,
+            std::path::Path::new(path),
+            notify::RecursiveMode::NonRecursive,
         )
         .map_err(|e| e.to_string())?;
 
     *state.watcher.lock().unwrap() = Some(watcher);
+
     Ok(())
 }
+
+
+
+
 #[tauri::command]
 async fn list_apps() -> Vec<AppInfo> {
     let locales = get_languages_from_env();
@@ -143,6 +196,75 @@ fn json_task(array: Vec<Task>) -> Result<(), String> {
 
     Ok(())
 }
+
+#[tauri::command]
+fn setting_listener(window: Window, state: State<'_, Arc<SettingWatcherState>>,) -> Result<(), String> {
+    let window = window.clone();
+    let last_content = Arc::clone(&state.last_content);
+
+    let path = "../public/sys_data/power.json";
+    if let Ok(apps_str) = std::fs::read_to_string(path) {
+        {
+            let mut last = last_content.lock().unwrap();
+            *last = apps_str.clone();
+        }
+
+        if let Ok(apps_json) =
+            serde_json::from_str::<SettingsJsonified>(&apps_str)
+        {
+            let _ = window.emit("settings_updated", &apps_json);
+        }
+    }
+
+    let mut watcher = notify::RecommendedWatcher::new(
+        move |res: Result<notify::Event, notify::Error>| {
+            if let Ok(event) = res {
+                use notify::EventKind;
+
+                match event.kind {
+                    EventKind::Modify(notify::event::ModifyKind::Data(_)) => {
+                        if let Ok(apps_str) = std::fs::read_to_string(path) {
+                            let mut last = last_content.lock().unwrap();
+
+                            if *last != apps_str {
+                                *last = apps_str.clone();
+
+                                if let Ok(apps_json) =
+                                    serde_json::from_str::<SettingsJsonified>(&apps_str)
+                                {
+                                    let window = window.clone();
+
+                                    tauri::async_runtime::spawn(async move {
+                                        let _ = window.emit(
+                                            "settings_updated",
+                                            &apps_json,
+                                        );
+                                    });
+                                }
+                            }
+                        }
+                    }
+                    _ => {}
+                }
+            }
+        },
+        notify::Config::default(),
+    )
+    .map_err(|e| e.to_string())?;
+
+    watcher
+        .watch(
+            std::path::Path::new(path),
+            notify::RecursiveMode::NonRecursive,
+        )
+        .map_err(|e| e.to_string())?;
+
+    *state.watcher.lock().unwrap() = Some(watcher);
+
+    Ok(())
+}
+
+
 #[tauri::command]
 fn open_devtools(app: tauri::AppHandle) {
     if let Some(webview_window) = app.get_webview_window("main") {
@@ -166,7 +288,8 @@ pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
         .manage(Arc::new(WatcherState::new()))
-        .invoke_handler(tauri::generate_handler![app_pin_listener, list_apps, json_task, read_tasks, open_devtools])
+        .manage(Arc::new(SettingWatcherState::new()))
+        .invoke_handler(tauri::generate_handler![app_pin_listener, list_apps, json_task, read_tasks, open_devtools, setting_listener])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

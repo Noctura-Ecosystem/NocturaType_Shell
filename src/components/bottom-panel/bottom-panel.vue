@@ -8,8 +8,8 @@
   onMounted(async () => {
     try {
         const unlisten = await listen<AppIcon[]>("panel_apps_updated", (event) => {
-        console.log("GOT UPDATE:- ", event.payload)
-        handleBackendMessage(event.payload);
+          console.log("GOT UPDATE:- ", event.payload)
+          handleBackendMessage(event.payload);
         });
 
         await invoke("app_pin_listener");

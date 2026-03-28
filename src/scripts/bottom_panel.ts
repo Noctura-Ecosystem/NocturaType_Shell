@@ -1,4 +1,5 @@
-import  {ref, onMounted} from "vue"
+import  {ref} from "vue"
+import { convertFileSrc } from "@tauri-apps/api/core";
 
 
 export const hovered = ref(false);
@@ -13,16 +14,11 @@ export type AppIcon = {
 
 export function handleBackendMessage(payloads: AppIcon[]) {
     icons = ref<AppIcon[]>([]);
-    for (const payload of payloads){
-        console.log("PAYLOAD", payload)
-        const path = `/assets/${payload.path.replace(/^\/+/, "")}`;
-        const name = payload.name.replace(/^\/+/, "");
-        console.log(`PATH: ${path},  NAME: ${name}`);
-        icons.value.push({
-            name: name,
-            path: path
-        });
-    }
+    let payloadsProcessed = payloads.map(payload => ({
+        ...payload,
+        path: payload.path ? convertFileSrc(payload.path) : ''
+    }));
+    icons.value = payloadsProcessed;
 };
 
 export function onEnter() {

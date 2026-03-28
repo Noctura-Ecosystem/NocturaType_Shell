@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import {ref, onMounted} from "vue";
+    import { onMounted } from "vue";
     import appContext from "../contexts/apps-context.vue";
     import timeContext from "../contexts/time-context.vue";
     import powerContext from "../contexts/power-context.vue";

@@ -179,6 +179,10 @@
   background-color: var(--color-focus);
 }
 
+.power-toggle.state {
+  background-color: var(--color-focus);
+}
+
 
 .power-toggle label {
   font-size: 14px;
@@ -213,6 +217,11 @@
   width: max-content;
   height: auto;
   transition: background-color 0.3s ease;
+  opacity: 0; 
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.appear .context-background {
+  opacity: 1 !important;
 }
 
 .context-label {
