@@ -1,6 +1,5 @@
-import { listen } from '@tauri-apps/api/event'
-import { onMounted, ref } from "vue";
-import {invoke} from "@tauri-apps/api/core"
+import { ref } from "vue";
+import { invoke } from "@tauri-apps/api/core";
 export const title = "Power"
 export let WiFi = ref(false);
 export let Theme = ref(false);
@@ -17,7 +16,7 @@ export type PanelJSON = {
     "airplane": boolean,
 }
 
-export function toggle(catagory: String) {
+export async function toggle(catagory: String) {
     switch (catagory) {
         case "WiFi": WiFi.value = !WiFi.value; break;
         case "theme": Theme.value = !Theme.value; break;
@@ -27,5 +26,6 @@ export function toggle(catagory: String) {
         case "air": airplane.value = !airplane.value; break;
         default: console.log("UNKNWON", catagory);
     }
+    await invoke("setting_json_task", { dict: {wifi: WiFi.value, theme: Theme.value, bluetooth: bluetooth.value, volume: volume.value, screen: screen.value, airplane: airplane.value} })
     console.log(` DEBUG:- ${WiFi.value}, ${Theme.value}, ${bluetooth.value}, ${volume.value}, ${screen.value}, ${airplane.value}`)
 }

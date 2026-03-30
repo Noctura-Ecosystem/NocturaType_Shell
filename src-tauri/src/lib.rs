@@ -198,6 +198,18 @@ fn json_task(array: Vec<Task>) -> Result<(), String> {
 }
 
 #[tauri::command]
+fn setting_json_task(dict: SettingsJsonified) -> Result<(), String> {
+    let file = std::fs::File::create("../public/sys_data/power.json")
+        .map_err(|e| e.to_string())?;
+    let writer = std::io::BufWriter::new(file);
+
+    serde_json::to_writer_pretty(writer, &dict)
+        .map_err(|e| e.to_string())?;
+
+    Ok(())
+}
+
+#[tauri::command]
 fn setting_listener(window: Window, state: State<'_, Arc<SettingWatcherState>>,) -> Result<(), String> {
     let window = window.clone();
     let last_content = Arc::clone(&state.last_content);
@@ -289,7 +301,7 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .manage(Arc::new(WatcherState::new()))
         .manage(Arc::new(SettingWatcherState::new()))
-        .invoke_handler(tauri::generate_handler![app_pin_listener, list_apps, json_task, read_tasks, open_devtools, setting_listener])
+        .invoke_handler(tauri::generate_handler![app_pin_listener, list_apps, json_task, read_tasks, open_devtools, setting_listener, setting_json_task])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

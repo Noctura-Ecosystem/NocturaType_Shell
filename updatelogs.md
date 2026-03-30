@@ -243,3 +243,9 @@
 - The script tag in the power vue file was made into a seperate ts file
 
 ---
+## ADD 2.89
+**Date:** 2026-03-30 23:16:10
+
+- Added write feature to power.json
+
+---
