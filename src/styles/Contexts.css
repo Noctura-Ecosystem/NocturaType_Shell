@@ -239,14 +239,6 @@
   background-color: var(--color-focus-mild);
 }
 
-.right-base {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 1000;
-  width: fit-content;
-  scale: 0.9;
-}
 .right-items {
   display: flex;
   flex-direction: column;

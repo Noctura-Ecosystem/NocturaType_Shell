@@ -1,62 +1,12 @@
 <script setup lang="ts">
-import baseContext from './base-context.vue';
-import { invoke } from '@tauri-apps/api/core';
-import {ref} from "vue"
 import "./../../styles/Var.css"
 import "./../../styles/Contexts.css"
-declare global {
-  interface Window {
-    openMenu?: (e: MouseEvent) => void
-  }
-}
-function openDevTools() {
-    invoke("open_devtools")
-}
-function reloadWindow() {
-  window.location.reload();
-}
-const title = "Context";
-const menuX = ref(0)
-const menuY = ref(0)
-const menuVisible = ref(false);
-window.openMenu = (e: MouseEvent) => {
-  menuX.value = e.clientX
-  menuY.value = e.clientY
-  menuVisible.value = true
-}
-
-document.addEventListener("click", () => {
-    menuVisible.value = false
-})
-
-const fileInput = ref<HTMLInputElement | null>(null);
-
-function openFileDialog() {
-  fileInput.value?.click();
-}
-
-function handleFileChange(event: Event) {
-  const target = event.target as HTMLInputElement;
-  if (!target.files || target.files.length === 0) return;
-
-  const file = target.files[0];
-  if (!file.type.startsWith('image/')) return;
-
-  const reader = new FileReader();
-  reader.onload = () => {
-    const imageUrl = reader.result as string;
-    document.body.style.backgroundImage = `url(${imageUrl})`;
-    document.body.style.backgroundSize = 'cover';
-    document.body.style.backgroundPosition = 'center';
-  };
-  reader.readAsDataURL(file);
-  fileInput.value!.value = '';
-}
+import {openDevTools, reloadWindow, title, menuVisible, menuX, menuY, openFileDialog, handleFileChange, fileInput} from "./../../scripts/right.ts"
 
 </script>
 
 <template>
-    <baseContext v-show="menuVisible" :label="title" class="right-base" :style="{ left: menuX + 'px', top: menuY + 'px' }">
+    <div v-show="menuVisible" :label="title" class="right-base" :style="{ left: menuX + 'px', top: menuY + 'px' }">
         <div class="right-items">
             <div class="right-item">
                 <span @click="openFileDialog()">Change background</span>
@@ -78,5 +28,17 @@ function handleFileChange(event: Event) {
                 <span @click="openDevTools()">[DEV] Inspect</span>
             </div>
         </div>
-    </baseContext>
+      </div>
 </template>
+
+<style>
+  .right-base {
+    position: absolute;
+    background-color: var(--color-base);
+    height: fit-content;
+    width: fit-content;
+    padding-top: 10px;
+    border-radius: 18px;
+    backdrop-filter: blur(5px);
+  }
+</style>

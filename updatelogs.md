@@ -249,3 +249,11 @@
 - Added write feature to power.json
 
 ---
+## FIX 2.89
+**Date:** 2026-04-02 21:49:54
+
+- Fixed right click context menu
+- Upgraded right click context menu UI
+- Prevented pointerevent to happen on contexts if they aren't visable
+
+---
