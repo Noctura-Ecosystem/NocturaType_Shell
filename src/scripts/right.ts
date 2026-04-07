@@ -1,5 +1,6 @@
 import {ref} from "vue"
 import { invoke } from '@tauri-apps/api/core';
+import './../styles/Var.css'
 
 export function openDevTools() {
     invoke("open_devtools")
@@ -22,10 +23,15 @@ document.addEventListener("click", () => {
     menuVisible.value = false
 })
 document.addEventListener("contextmenu", (e) => {
-    console.log("OPENING RIGHT-CONTEXT MENU")
     e.preventDefault();
+    const target = e.target as HTMLElement | null;
+    if (!target) return;
+    const interactive = target.closest(
+        "button, input, textarea, select, a, [contenteditable], .no-custom-menu" /*TODO: ADD DIV, FIX MARGIN OF APP CONTEXT */
+    );
+    if (interactive) return;
     openMenu(e);
-})
+});
 
 export const fileInput = ref<HTMLInputElement | null>(null);
 
@@ -49,4 +55,51 @@ export function handleFileChange(event: Event) {
   };
   reader.readAsDataURL(file);
   fileInput.value!.value = '';
+}
+
+function setTheme(vars: Record<string, string>) {
+  const root = document.documentElement
+
+  Object.entries(vars).forEach(([key, value]) => {
+    root.style.setProperty(key, value)
+  })
+}
+
+export function toggleTheme(){
+  let theme = "light";
+  switch (theme) {
+    case "dark":
+      dark_mode();
+      break;
+    case "light":
+      light_mode();
+      break;
+  }
+  function dark_mode(){
+    theme = "dark"
+    setTheme({
+      '--color-base': 'rgba(84, 82, 82, 0.3)',
+      '--color-mild': 'rgba(84, 82, 82, 0.2)',
+      '--color-focus': 'rgba(82, 82, 82, 0.5)',
+      '--color-focus-mild': 'rgba(82, 82, 82, 0.38)',
+      '--text-head': 'rgba(73, 73, 73, 0.5)',
+      '--text-secondary-head': 'rgba(90, 90, 90, 0.7)',
+      '--text-body': 'rgb(30, 30, 30)',
+      '--text-contrast': 'rgb(255, 255, 255)'
+    });
+  }
+  function light_mode() {
+    theme = "light"
+    setTheme({
+      '--color-base': 'rgba(245, 245, 245, 0.3)',
+      '--color-mild': 'rgba(235, 235, 235, 0.2)',
+      '--color-focus': 'rgba(220, 220, 220, 0.6)',
+      '--color-focus-mild': 'rgba(225, 225, 225, 0.38)',
+      '--text-head': 'rgba(20, 20, 20, 0.5)',
+      '--text-secondary-head': 'rgba(40, 40, 40, 0.7)',
+      '--text-body': 'rgb(15, 15, 15)',
+      '--text-contrast': 'rgba(20, 20, 20, 1)'
+    });
+  }
+  console.log(theme)
 }

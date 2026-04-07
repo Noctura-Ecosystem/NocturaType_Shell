@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import "./../../styles/Var.css"
 import "./../../styles/Contexts.css"
-import {openDevTools, reloadWindow, title, menuVisible, menuX, menuY, openFileDialog, handleFileChange, fileInput} from "./../../scripts/right.ts"
+import {openDevTools, reloadWindow, title, menuVisible, menuX, menuY, openFileDialog, handleFileChange, fileInput, toggleTheme} from "./../../scripts/right.ts"
 
 </script>
 
@@ -20,6 +20,9 @@ import {openDevTools, reloadWindow, title, menuVisible, menuX, menuY, openFileDi
             </div>
             <div class="right-item">
                 <span>Open Setting</span>
+            </div>
+            <div class="right-item">
+                <span @click="toggleTheme()">Toggle theme</span>
             </div>
             <div class="right-item">
                 <span @click="reloadWindow()">[DEV] Reload</span>

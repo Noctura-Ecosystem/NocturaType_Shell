@@ -18,7 +18,7 @@ import { onMounted } from "vue";
 </script>
 
 <template>
-  <context :label="title">
+  <context class="body" :label="title">
     <div class="items-wrapper">
       <div v-for="(app, index) in apps" :key="index" :data-exec="app.exec" class="item">
         <img v-if="app.icon_path" :src="app.icon_path" :alt="app.name" class="item-img" />
@@ -30,3 +30,9 @@ import { onMounted } from "vue";
     </div>
   </context>
 </template>
+
+<style>
+  .body{
+    margin: none;
+  }
+</style>

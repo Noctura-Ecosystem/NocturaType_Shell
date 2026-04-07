@@ -158,9 +158,10 @@
     - So I thought to use a resource_dir but that idea only works for production not development
     - Hence, now im using the built in 'convertFileSrc' tauri function
     - It turns these absoulute files into urls you can use in your frontend
-    - WARNING:- when using this technique, BE SURE TO UPDATE THE src-tauri/tauri.conf.json:-
-    - update CSP
-    - assetProtocol must be enabled and set the scopes
+    - WARNING:- when using this technique, BE SURE TO UPDATE THE 
+        - src-tauri/tauri.conf.json:-
+        - update CSP
+        - assetProtocol must be enabled and set the scopes
 
 ---
 ## SAMPLE 2.83
@@ -255,5 +256,14 @@
 - Fixed right click context menu
 - Upgraded right click context menu UI
 - Prevented pointerevent to happen on contexts if they aren't visable
+
+---
+## SAMPLE 2.89.1
+**Date:** 2026-04-07 23:48:34
+
+- Added Dark/Light mode
+- TODO:-
+    - Store theme in json file
+    - Fix margin of app context for right click context menu
 
 ---
