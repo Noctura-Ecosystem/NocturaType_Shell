@@ -10,6 +10,8 @@ use std::fs::File;
 use serde_json;
 use std::io::BufWriter;
 use tauri::Manager; 
+use std::fs;
+
 
 
 
@@ -33,6 +35,11 @@ struct SettingsJsonified {
 struct WatcherState {
     watcher: Arc<Mutex<Option<RecommendedWatcher>>>,
     last_content: Arc<Mutex<String>>,
+}
+
+#[derive(serde::Serialize, serde::Deserialize, Debug)]
+struct ThemeJsonified {
+    theme: String,
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -172,7 +179,7 @@ async fn list_apps() -> Vec<AppInfo> {
                 continue;
             }
         }
-        println!("{}, {}, {}, {:?}", name, exec, description, icon_path);
+//        println!("{}, {}, {}, {:?}", name, exec, description, icon_path);
         result.push(AppInfo{
             name: name.to_string(),
             exec,
@@ -207,6 +214,32 @@ fn setting_json_task(dict: SettingsJsonified) -> Result<(), String> {
         .map_err(|e| e.to_string())?;
 
     Ok(())
+}
+
+#[tauri::command]
+fn theme_json_task(dict: ThemeJsonified) -> Result<(), String> {
+    let file = std::fs::File::create("../public/sys_data/theme.json")
+        .map_err(|e| e.to_string())?;
+    let writer = std::io::BufWriter::new(file);
+
+    serde_json::to_writer_pretty(writer, &dict)
+        .map_err(|e| e.to_string())?;
+
+    Ok(())
+}
+
+#[tauri::command]
+fn theme_read() -> Result<String, String>  {
+    let file_content = fs::read_to_string("../public/sys_data/theme.json").unwrap();
+    let content: ThemeJsonified = serde_json::from_str(&file_content).unwrap();
+    println!("{}", content.theme);
+    Ok(content.theme)
+}
+
+#[tauri::command]
+fn theme_write(theme: ThemeJsonified) {
+    println!("{:?}", theme);
+    let json = serde_json::to_string(&theme).unwrap();
 }
 
 #[tauri::command]
@@ -301,7 +334,9 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .manage(Arc::new(WatcherState::new()))
         .manage(Arc::new(SettingWatcherState::new()))
-        .invoke_handler(tauri::generate_handler![app_pin_listener, list_apps, json_task, read_tasks, open_devtools, setting_listener, setting_json_task])
+        .invoke_handler(tauri::generate_handler![app_pin_listener, list_apps,
+            json_task, read_tasks, open_devtools, setting_listener, setting_json_task,
+            theme_json_task, theme_read, theme_write])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

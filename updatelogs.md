@@ -267,3 +267,10 @@
     - Fix margin of app context for right click context menu
 
 ---
+## SAMPLE 2.89.2
+**Date:** 2026-04-08 23:20:05
+
+- Fixed dark/light mode
+- Themes are saved and auto loaded
+
+---

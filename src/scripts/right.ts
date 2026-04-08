@@ -1,6 +1,19 @@
 import {ref} from "vue"
 import { invoke } from '@tauri-apps/api/core';
 import './../styles/Var.css'
+import { getCurrentWindow } from "@tauri-apps/api/window";
+
+const appWindow = getCurrentWindow();
+let theme = await invoke("theme_read");
+switch (theme) {
+  case "light":
+    light_mode();
+    break;
+  case "dark":
+    dark_mode();
+    break;
+}
+
 
 export function openDevTools() {
     invoke("open_devtools")
@@ -16,7 +29,7 @@ function openMenu(e: MouseEvent) {
   menuX.value = e.clientX
   menuY.value = e.clientY
   menuVisible.value = true
-  console.log(menuVisible.value, menuX.value, menuY.value)
+  //console.log(menuVisible.value, menuX.value, menuY.value)
 }
 
 document.addEventListener("click", () => {
@@ -66,40 +79,51 @@ function setTheme(vars: Record<string, string>) {
 }
 
 export function toggleTheme(){
-  let theme = "light";
+  console.log(theme)
   switch (theme) {
-    case "dark":
+    case "light":
       dark_mode();
       break;
-    case "light":
+    case "dark":
       light_mode();
       break;
   }
-  function dark_mode(){
-    theme = "dark"
-    setTheme({
-      '--color-base': 'rgba(84, 82, 82, 0.3)',
-      '--color-mild': 'rgba(84, 82, 82, 0.2)',
-      '--color-focus': 'rgba(82, 82, 82, 0.5)',
-      '--color-focus-mild': 'rgba(82, 82, 82, 0.38)',
-      '--text-head': 'rgba(73, 73, 73, 0.5)',
-      '--text-secondary-head': 'rgba(90, 90, 90, 0.7)',
-      '--text-body': 'rgb(30, 30, 30)',
-      '--text-contrast': 'rgb(255, 255, 255)'
-    });
-  }
-  function light_mode() {
-    theme = "light"
-    setTheme({
-      '--color-base': 'rgba(245, 245, 245, 0.3)',
-      '--color-mild': 'rgba(235, 235, 235, 0.2)',
-      '--color-focus': 'rgba(220, 220, 220, 0.6)',
-      '--color-focus-mild': 'rgba(225, 225, 225, 0.38)',
-      '--text-head': 'rgba(20, 20, 20, 0.5)',
-      '--text-secondary-head': 'rgba(40, 40, 40, 0.7)',
-      '--text-body': 'rgb(15, 15, 15)',
-      '--text-contrast': 'rgba(20, 20, 20, 1)'
-    });
-  }
+
   console.log(theme)
+}
+
+appWindow.onCloseRequested(async (event) => {
+  console.log("Closing soon...");
+  event.preventDefault();
+  invoke("theme_write", {theme: theme})
+  await appWindow.close();
+});
+
+function dark_mode(){
+  theme = "dark"
+  setTheme({
+    '--color-base': 'rgba(84, 82, 82, 0.3)',
+    '--color-mild': 'rgba(84, 82, 82, 0.2)',
+    '--color-focus': 'rgba(82, 82, 82, 0.5)',
+    '--color-focus-mild': 'rgba(82, 82, 82, 0.38)',
+    '--text-head': 'rgba(73, 73, 73, 0.5)',
+    '--text-secondary-head': 'rgba(90, 90, 90, 0.7)',
+    '--text-body': 'rgb(30, 30, 30)',
+    '--text-contrast': 'rgb(255, 255, 255)'
+  });
+  invoke("theme_json_task", {dict: {"theme": "dark"}})
+}
+function light_mode() {
+  theme = "light"
+  setTheme({
+    '--color-base': 'rgba(245, 245, 245, 0.3)',
+    '--color-mild': 'rgba(235, 235, 235, 0.2)',
+    '--color-focus': 'rgba(220, 220, 220, 0.6)',
+    '--color-focus-mild': 'rgba(225, 225, 225, 0.38)',
+    '--text-head': 'rgba(20, 20, 20, 0.5)',
+    '--text-secondary-head': 'rgba(40, 40, 40, 0.7)',
+    '--text-body': 'rgb(15, 15, 15)',
+    '--text-contrast': 'rgba(20, 20, 20, 1)'
+  });
+  invoke("theme_json_task", {dict: {"theme": "light"}})
 }
